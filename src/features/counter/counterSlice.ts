@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 import { fetchCount } from './counterAPI';
 import { trackIncrement } from '../../analytics/events';
+import { trackDecrement } from '../../analytics/events';
 
 export interface CounterState {
   value: number;
@@ -41,6 +42,9 @@ export const counterSlice = createSlice({
       state.value += 1;
     },
     decrement: (state) => {
+      // Change added as per request
+      // https://synthesia.notion.site/Analytics-Engineer-Synthesia-Challenge-8d9a05d3967b4ceaae96d52a83b36690
+      trackDecrement(state.value - 1)
       state.value -= 1;
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
