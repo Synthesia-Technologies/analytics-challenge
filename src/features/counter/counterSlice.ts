@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 import { fetchCount } from './counterAPI';
-import { trackIncrement } from '../../analytics/events';
+import { trackIncrement, trackDecrement } from '../../analytics/events';
 
 export interface CounterState {
   value: number;
@@ -41,6 +41,7 @@ export const counterSlice = createSlice({
       state.value += 1;
     },
     decrement: (state) => {
+      trackDecrement(state.value - 1)
       state.value -= 1;
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
